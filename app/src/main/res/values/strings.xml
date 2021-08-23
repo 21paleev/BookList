@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">BookList</string>
+    <string name="app_name">Booking List</string>
+    <string name="add_shop_item_content_description">Add new book item</string>
 </resources>
