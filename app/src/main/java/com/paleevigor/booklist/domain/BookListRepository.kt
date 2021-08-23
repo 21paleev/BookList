@@ -1,5 +1,7 @@
 package com.paleevigor.booklist.domain
 
+import androidx.lifecycle.LiveData
+
 interface BookListRepository {
     fun addBookItem(bookItem: BookItem)
 
@@ -9,5 +11,5 @@ interface BookListRepository {
 
     fun getBookItem(bookItemId: Int): BookItem
 
-    fun getBookList(): List<BookItem>
+    fun getBookList(): LiveData<List<BookItem>>
 }

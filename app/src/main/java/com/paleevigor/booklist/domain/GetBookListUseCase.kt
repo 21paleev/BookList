@@ -1,7 +1,9 @@
 package com.paleevigor.booklist.domain
 
+import androidx.lifecycle.LiveData
+
 class GetBookListUseCase (private val bookListRepository: BookListRepository){
-    fun getBookList(): List<BookItem> {
+    fun getBookList(): LiveData<List<BookItem>> {
         return bookListRepository.getBookList()
     }
 }
