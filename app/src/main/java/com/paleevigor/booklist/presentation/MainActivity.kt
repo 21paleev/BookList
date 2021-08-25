@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.RecyclerView
 import com.paleevigor.booklist.R
 import com.paleevigor.booklist.domain.BookItem
 
@@ -13,42 +14,24 @@ import com.paleevigor.booklist.domain.BookItem
 class MainActivity : AppCompatActivity() {
 
     private lateinit var viewModel: MainViewModel
-    private lateinit var llBookList: LinearLayout
+    private lateinit var adapter: BookListAdapter
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        llBookList = findViewById(R.id.ll_book_list)
+        setupRecyclerView()
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         //подписываемся на объект bookList
         viewModel.bookList.observe(this) {
-            showList(it)
+            adapter.bookList = it
         }
     }
-    private fun showList(list: List<BookItem>) {
-        llBookList.removeAllViews()
-        //для каждого элемента списка
-        for (bookItem in list) {
-           // выбираем соответствующий макет
-            val layoutId = if (bookItem.enabled) {
-                R.layout.item_book_enabled
-            } else {
-                R.layout.item_book_disabled
-            }
-            // делаем вью из макета
-            val view = LayoutInflater.from(this).inflate(layoutId, llBookList, false)
-            // находим и заполняем данные каждого элемента
-            val tvName = view.findViewById<TextView>(R.id.tv_name)
-            val tvCount = view.findViewById<TextView>(R.id.tv_count)
-            tvName.text = bookItem.name
-            tvCount.text = bookItem.count.toString()
-            //устанавливаем слушатель долгого нажатия для смены свойства
-            view.setOnLongClickListener {
-                viewModel.changeEnableState(bookItem)
-                true
-            }
-            // добавляем вью элемента в LL
-            llBookList.addView(view)
-        }
+
+    // метод установки RV
+    private fun setupRecyclerView() {
+        val rvBookList = findViewById<RecyclerView>(R.id.rv_book_list)
+        adapter = BookListAdapter()
+        rvBookList.adapter = adapter
     }
 }
