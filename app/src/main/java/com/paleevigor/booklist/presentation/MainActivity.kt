@@ -2,7 +2,6 @@ package com.paleevigor.booklist.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -32,9 +31,9 @@ class MainActivity : AppCompatActivity() {
         for (bookItem in list) {
            // выбираем соответствующий макет
             val layoutId = if (bookItem.enabled) {
-                R.layout.item_shop_enabled
+                R.layout.item_book_enabled
             } else {
-                R.layout.item_shop_disabled
+                R.layout.item_book_disabled
             }
             // делаем вью из макета
             val view = LayoutInflater.from(this).inflate(layoutId, llBookList, false)
